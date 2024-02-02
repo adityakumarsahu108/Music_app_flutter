@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^6.1.1
   audioplayers: ^5.2.1
+  lottie: ^2.7.0
+  animate_gradient: ^0.0.2+1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,7 @@ flutter:
   assets:
     - assets/audio/
     - assets/images/
+    - assets/animations/bounce.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

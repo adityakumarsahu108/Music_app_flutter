@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gym_music_app/models/playlist_provider.dart';
+import 'package:gym_music_app/pages/load_page.dart';
 
 import 'package:gym_music_app/themes/theme_provider.dart';
 import 'package:provider/provider.dart';
-
-import 'pages/home_page.dart';
 
 void main() {
   runApp(
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const LoadPage(),
       theme: Provider.of<ThemeProvider>(context).themeData,
     );
   }
