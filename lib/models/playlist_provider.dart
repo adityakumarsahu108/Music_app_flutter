@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gym_music_app/models/songs.dart';
 
 class PlaylistProvider extends ChangeNotifier {
+  bool _isRepeatActive = false;
+  bool _isRepeatTempActive = false;
   //playlist of songs
   final List<Song> _playlist = [
     //song 1
@@ -31,6 +33,12 @@ class PlaylistProvider extends ChangeNotifier {
         artistName: "The Weeknd",
         albumArtPath: "assets/images/all_weeknd.png",
         audioPath: "audio/all_weeknd.mp3"),
+    //song 5
+    Song(
+        songName: "Best of Hindi English Remix ",
+        artistName: "Remix",
+        albumArtPath: "assets/images/hindi_english.jpg",
+        audioPath: "audio/hindi_english.mp3"),
   ];
 
   //current song playing index
@@ -111,10 +119,22 @@ class PlaylistProvider extends ChangeNotifier {
     } else {
       if (_currentSongIndex! > 0) {
         _currentSongIndex = _currentSongIndex! - 1;
+        play();
       } else {
         //if first then loop to last
         _currentSongIndex = _playlist.length - 1;
+        play();
       }
+    }
+  }
+
+  // Function to repeat the current song after it ends
+  void repeatCurrentSong() async {
+    if (_currentSongIndex != null) {
+      // Seek to the beginning of the current song
+      seek(Duration.zero);
+      // Play the current song again
+      play();
     }
   }
 
@@ -138,6 +158,19 @@ class PlaylistProvider extends ChangeNotifier {
     });
   }
 
+  // Method to toggle the repeat state
+  void toggleRepeatState() {
+    _isRepeatActive = !_isRepeatActive;
+    _isRepeatTempActive = true;
+    notifyListeners();
+
+    // Set a delay to revert the temporary color after a few seconds
+    Future.delayed(const Duration(seconds: 1), () {
+      _isRepeatTempActive = false;
+      notifyListeners();
+    });
+  }
+
 //dispose of the audio player
 
   /*
@@ -149,6 +182,14 @@ class PlaylistProvider extends ChangeNotifier {
   bool get isPlaying => _isPlaying;
   Duration get currentDuration => _currentDuration;
   Duration get totalDuration => _totalDuration;
+  // Getter for the repeat icon color
+  Color get repeatIconColor {
+    if (_isRepeatTempActive) {
+      return const Color.fromARGB(255, 0, 0, 0); // Set your temporary color
+    } else {
+      return _isRepeatActive ? const Color.fromARGB(255, 0, 0, 0) : Colors.grey;
+    }
+  }
 
   /*
   S E T T E R S

@@ -4,8 +4,18 @@ import 'package:gym_music_app/models/playlist_provider.dart';
 import 'package:gym_music_app/pages/settings_page.dart';
 import 'package:provider/provider.dart';
 
-class SongPage extends StatelessWidget {
-  const SongPage({super.key});
+import 'heart_icon.dart';
+
+// for changing heart colour on tap
+
+class SongPage extends StatefulWidget {
+  const SongPage({Key? key}) : super(key: key);
+  @override
+  _SongPageState createState() => _SongPageState();
+}
+
+class _SongPageState extends State<SongPage> {
+  bool isFavorite = false;
 
   //convert duration ito min:sec
   String formatTime(Duration duration) {
@@ -95,10 +105,13 @@ class SongPage extends StatelessWidget {
                                 ],
                               ),
                               //heart icon
-                              const Icon(
-                                Icons.favorite,
-                                color: Colors.red,
-                                size: 30,
+                              HeartIcon(
+                                isFavorite: isFavorite,
+                                onTap: (bool newFavorite) {
+                                  setState(() {
+                                    isFavorite = newFavorite;
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -124,7 +137,14 @@ class SongPage extends StatelessWidget {
                               const Icon(Icons.shuffle),
 
                               //repeat icon
-                              const Icon(Icons.repeat),
+                              GestureDetector(
+                                child: Icon(Icons.repeat,
+                                    color: value.repeatIconColor),
+                                onTap: () {
+                                  value.toggleRepeatState();
+                                  value.repeatCurrentSong();
+                                },
+                              ),
 
                               //end time
                               Text(formatTime(value.totalDuration)),
