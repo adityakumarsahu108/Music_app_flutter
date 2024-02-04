@@ -28,8 +28,24 @@ class _HomePageState extends State<HomePage> {
     playlistProvider.currentSongIndex = songIndex;
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (context) => const SongPage(),
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return const SongPage();
+        },
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.easeInOut;
+          var curveTween = CurveTween(curve: curve);
+          var tween = Tween(begin: begin, end: end).chain(curveTween);
+          var offsetAnimation = animation.drive(tween);
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+        transitionDuration:
+            const Duration(seconds: 1), // Adjust the duration as needed
       ),
     );
   }
@@ -45,6 +61,8 @@ class _HomePageState extends State<HomePage> {
       body: Consumer<PlaylistProvider>(
         builder: (context, value, child) {
           final List<Song> playlist = value.playlist;
+
+          // Filter songs directly from the original playlist
           final List<Song> filteredPlaylist = playlist
               .where((song) =>
                   song.songName
@@ -73,8 +91,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 15,
               ),
-              if (value.searchQuery
-                  .isEmpty) // Show carousel only when the search is empty
+              if (value.searchQuery.isEmpty)
                 NeuBox(
                   child: CarouselSlider(
                     options: CarouselOptions(
@@ -88,15 +105,18 @@ class _HomePageState extends State<HomePage> {
                         builder: (BuildContext context) {
                           return GestureDetector(
                             onTap: () => goToSong(playlist.indexOf(song)),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                image: DecorationImage(
-                                  image: AssetImage(song.albumArtPath),
-                                  fit: BoxFit.cover,
+                            child: Hero(
+                              tag: "albumArt${playlist.indexOf(song)}",
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  image: DecorationImage(
+                                    image: AssetImage(song.albumArtPath),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
@@ -116,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                         title: Text(song.songName),
                         subtitle: Text(song.artistName),
                         leading: Image.asset(song.albumArtPath),
-                        onTap: () => goToSong(index),
+                        onTap: () => goToSong(playlist.indexOf(song)),
                       );
                     },
                   ),

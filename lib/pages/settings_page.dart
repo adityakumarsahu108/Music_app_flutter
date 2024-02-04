@@ -8,6 +8,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<ThemeProvider>(context).isDarkMode;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -24,11 +25,13 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             //dark mode
-            const Text(
-              "Dark Mode",
-              style: TextStyle(fontWeight: FontWeight.bold),
+            Text(
+              isDarkMode ? "Light Mode" : "Dark Mode",
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-
             //switch
             CupertinoSwitch(
               value:
@@ -36,6 +39,12 @@ class SettingsPage extends StatelessWidget {
               onChanged: (value) =>
                   Provider.of<ThemeProvider>(context, listen: false)
                       .toggleTheme(),
+              trackColor: CupertinoDynamicColor.withBrightness(
+                color: Colors
+                    .grey.shade600, // Change this to the desired track color
+                darkColor: Colors.grey.shade900,
+              ),
+              activeColor: Colors.grey.shade200,
             )
           ],
         ),

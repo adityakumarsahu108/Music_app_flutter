@@ -6,15 +6,15 @@ import 'package:provider/provider.dart';
 
 import 'heart_icon.dart';
 
-// for changing heart colour on tap
+// for transition between song page and homepage
 
 class SongPage extends StatefulWidget {
   const SongPage({Key? key}) : super(key: key);
   @override
-  _SongPageState createState() => _SongPageState();
+  SongPageState createState() => SongPageState();
 }
 
-class _SongPageState extends State<SongPage> {
+class SongPageState extends State<SongPage> {
   bool isFavorite = false;
 
   //convert duration ito min:sec
@@ -118,6 +118,7 @@ class _SongPageState extends State<SongPage> {
                         )
                       ],
                     )),
+
                     const SizedBox(
                       height: 25,
                     ),

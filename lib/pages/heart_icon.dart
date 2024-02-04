@@ -8,10 +8,10 @@ class HeartIcon extends StatefulWidget {
       : super(key: key);
 
   @override
-  _HeartIconState createState() => _HeartIconState();
+  HeartIconState createState() => HeartIconState();
 }
 
-class _HeartIconState extends State<HeartIcon> {
+class HeartIconState extends State<HeartIcon> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -3,7 +3,7 @@ import 'package:gym_music_app/pages/home_page.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadPage extends StatelessWidget {
-  const LoadPage({super.key});
+  const LoadPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,8 @@ class LoadPage extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               Color.fromARGB(255, 25, 28, 30),
-              Color.fromARGB(255, 101, 99, 101)
-            ], // Change these colors as needed
+              Color.fromARGB(255, 101, 99, 101),
+            ],
           ),
         ),
         child: SafeArea(
@@ -26,7 +26,7 @@ class LoadPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 35),
                 child: Text(
-                  'WELCOME ',
+                  'WELCOME',
                   style: TextStyle(
                     fontSize: 40,
                     letterSpacing: 7,
@@ -35,28 +35,35 @@ class LoadPage extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 20),
               Expanded(
                 child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Align items in the center
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: Alignment.center,
-                      child: GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(),
-                          ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomePage(),
                         ),
-                        child: Lottie.asset(
-                          'assets/animations/bounce.json',
-                        ),
+                      ),
+                      child: Lottie.asset(
+                        'assets/animations/bounce.json',
+                        height: 200,
                       ),
                     ),
                   ],
                 ),
               ),
+              const SizedBox(height: 20),
+              const Text(
+                'Tap to Start',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 30),
             ],
           ),
         ),
