@@ -20,7 +20,7 @@ class PlaylistProvider extends ChangeNotifier {
         songName: "Popular",
         artistName: "The Weeknd",
         albumArtPath: "assets/images/popular.jpg",
-        audioPath: "audio/starboy.mp3"),
+        audioPath: "audio/popular.mp3"),
     //song 3
     Song(
         songName: "Starboy",
@@ -43,6 +43,7 @@ class PlaylistProvider extends ChangeNotifier {
 
   //current song playing index
   int? _currentSongIndex;
+  String _searchQuery = '';
 
   //AUDIO PLAYER
 //audio player
@@ -171,6 +172,11 @@ class PlaylistProvider extends ChangeNotifier {
     });
   }
 
+  void setSearchQuery(String query) {
+    _searchQuery = query;
+    notifyListeners();
+  }
+
 //dispose of the audio player
 
   /*
@@ -190,6 +196,8 @@ class PlaylistProvider extends ChangeNotifier {
       return _isRepeatActive ? const Color.fromARGB(255, 0, 0, 0) : Colors.grey;
     }
   }
+
+  String get searchQuery => _searchQuery;
 
   /*
   S E T T E R S
