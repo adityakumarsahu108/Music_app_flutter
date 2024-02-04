@@ -3,7 +3,7 @@ import 'package:gym_music_app/pages/home_page.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadPage extends StatelessWidget {
-  const LoadPage({Key? key});
+  const LoadPage({super.key});
 
   @override
   Widget build(BuildContext context) {
